@@ -33,7 +33,6 @@ namespace p48_lessons_asp.Controllers
             _mapper = mapper;
         }
 
-        // Отримання списку всіх продуктів
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
@@ -69,18 +68,15 @@ namespace p48_lessons_asp.Controllers
             }
         }
 
-        // Створення продукту з валідацією та мапінгом
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductModel model)
         {
-            // 1. Валідація моделі через FluentValidation
             var validationResult = await _validator.GetErrorsAsync(model);
             if (validationResult != null)
             {
                 return BadRequest(validationResult);
             }
 
-            // 2. Створення сутності
             var product = new Product
             {
                 Name = model.Name,
@@ -92,11 +88,9 @@ namespace p48_lessons_asp.Controllers
 
             try
             {
-                // 3. Збереження в базу даних
                 await _dataContext.Products.AddAsync(product);
                 await _dataContext.SaveChangesAsync();
 
-                // 4. Повернення успішної відповіді (201 Created)
                 return StatusCode(201, new
                 {
                     StatusCode = 201,
