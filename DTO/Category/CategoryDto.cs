@@ -7,6 +7,5 @@ public class CategoryDto
     public string Title { get; set; } = string.Empty;
     public string? Description { get; set; }
 
-    // свої властивості, наприклад кількість продуктів, складні поля(які складаються з декількох)
     public int ProductCount{get;set;}
 }
